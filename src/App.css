@@ -1,0 +1,236 @@
+/* -------------------
+   ألوان وخطوط الموقع
+--------------------- */
+:root {
+    --primary: #FF6B35; /* برتقالي ناري */
+    --secondary: #004E89; /* أزرق محيطي */
+    --accent: #FFD449; /* أصفر ذهبي */
+    --background: #F9FAFB; /* خلفية دخانية */
+    --text: #2D3748; /* نص داكن */
+    --card-bg: #FFFFFF; /* خلفية الكروت */
+  }
+  
+  /* -------------------
+     إعدادات أساسية
+  --------------------- */
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    background: var(--background);
+    font-family: 'Inter', sans-serif;
+    color: var(--text);
+    position: relative;
+    line-height: 1.6;
+  }
+  
+  /* خلفية هندسية خفيفة */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('data:image/svg+xml,<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg"><path fill="%23FF6B3550" d="M44.6,-58.1C56.6,-48.6,63.6,-32.6,66.9,-15.4C70.2,1.8,69.8,20.3,62.6,35.5C55.4,50.7,41.5,62.7,25.6,68.9C9.7,75.1,-8.3,75.5,-24.5,70.1C-40.7,64.7,-55.2,53.5,-64.1,38.6C-73.1,23.7,-76.5,5.1,-72.5,-10.3C-68.5,-25.7,-57.2,-38.8,-43.3,-47.7C-29.5,-56.6,-13.1,-61.2,2.5,-64.3C18,-67.3,35.9,-68.7,44.6,-58.1Z"/></svg>');
+    opacity: 0.05;
+    z-index: -1;
+  }
+  
+  /* -------------------
+     تنسيقات العناوين
+  --------------------- */
+  h1, h2, h3 {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+  }
+  
+  a {
+    text-decoration: none;
+    color: inherit;
+    transition: color 0.3s ease;
+  }
+  
+  /* -------------------
+     الهيدر (Navbar)
+  --------------------- */
+  .navbar {
+    background: var(--primary);
+    padding: 1rem 5%;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .logo {
+    width: 45px;
+    height: 45px;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+  }
+  
+  .nav-links a {
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    transition: all 0.3s;
+  }
+  
+  .nav-links a:hover {
+    background: rgba(255,255,255,0.15);
+  }
+  
+  .auth-buttons {
+    display: flex;
+    gap: 1rem;
+  }
+  
+  .btn-login,
+  .btn-register {
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    font-weight: 600;
+  }
+  
+  .btn-login {
+    background: transparent;
+    color: white;
+  }
+  
+  .btn-register {
+    background: var(--secondary);
+    color: white;
+    border: none;
+  }
+  
+  /* -------------------
+     قسم المنتجات
+  --------------------- */
+  .products-section {
+    padding: 4rem 5%;
+  }
+  
+  .section-title {
+    text-align: center;
+    font-size: 2.5rem;
+    margin-bottom: 3rem;
+    color: var(--text);
+  }
+  
+  .products-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+  }
+  
+  .product-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+    position: relative;
+  }
+  
+  .product-card:hover {
+    transform: translateY(-5px);
+  }
+  
+  .product-image {
+    height: 250px;
+    object-fit: cover;
+    width: 100%;
+  }
+  
+  .product-details {
+    padding: 1.5rem;
+  }
+  
+  .product-badge {
+    position: absolute;
+    top: 1rem;
+    left: 1rem;
+    background: var(--accent);
+    color: #333;
+    font-weight: 700;
+    padding: 0.25rem 0.75rem;
+    border-radius: 50px;
+  }
+  
+  .product-description {
+    color: #718096;
+    font-size: 0.95rem;
+    margin: 0.5rem 0 1rem;
+  }
+  
+  .price-tag {
+    color: var(--primary);
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 1rem 0;
+  }
+  
+  .add-to-cart {
+    background: var(--secondary);
+    color: white;
+    width: 100%;
+    padding: 0.75rem;
+    border-radius: 8px;
+    transition: background 0.3s;
+    border: none;
+  }
+  
+  .add-to-cart:hover {
+    background: #003459;
+  }
+  
+  /* -------------------
+     تأثير ظل متدرج للكروت
+  --------------------- */
+  .product-card::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 5%;
+    width: 90%;
+    height: 20px;
+    background: linear-gradient(to bottom, rgba(0,0,0,0.1) 0%, rgba(0,0,0,0) 100%);
+    filter: blur(8px);
+    z-index: -1;
+  }
+  
+  /* -------------------
+     تجاوب الموبايل
+  --------------------- */
+  @media (max-width: 768px) {
+    .nav-links {
+      display: none; /* قائمة هامبرجر لاحقًا */
+    }
+  
+    .hero h1 {
+      font-size: 2.5rem;
+    }
+  
+    .product-grid {
+      grid-template-columns: 1fr;
+      padding: 1rem;
+    }
+  
+    .footer-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+  

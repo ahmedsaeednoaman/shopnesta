@@ -1,3 +1,4 @@
+import './App.css';
 import { useEffect } from "react";
 import { auth } from "./firebase/firebaseConfig";
 import { onAuthStateChanged } from "firebase/auth";
