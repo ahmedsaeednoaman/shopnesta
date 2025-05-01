@@ -8,7 +8,7 @@ const Footer = () => {
         <div className="row">
           {/* معلومات المتجر */}
           <div className="col-md-4 mb-4">
-            <h5 className="text-warning">ShopNesta</h5>
+            <h5 className="text-warning">ShopNest</h5>
             <p>متجرك الإلكتروني المفضل لجميع احتياجاتك</p>
             <p>جودة عالية - أسعار منافسة - توصيل سريع</p>
           </div>
@@ -27,30 +27,30 @@ const Footer = () => {
           {/* وسائل التواصل */}
           <div className="col-md-4 mb-4">
             <h5 className="text-warning">تواصل معنا</h5>
-            <div className="social-links">
+            <div className="social-links d-flex flex-column gap-2">
               <a 
                 href="https://github.com/ahmedsaeednoaman/shopnesta" 
-                className="text-white me-3"
+                className="text-white"
                 target="_blank" 
                 rel="noopener noreferrer"
               >
-                <FaGithub className="me-1" /> GitHub
+                <FaGithub className="me-2" /> GitHub
               </a>
               <a 
-                href="#" 
-                className="text-white me-3"
+                href="https://facebook.com/shopnest" 
+                className="text-white"
                 target="_blank" 
                 rel="noopener noreferrer"
               >
-                <FaFacebook className="me-1" /> Facebook
+                <FaFacebook className="me-2" /> Facebook
               </a>
               <a 
-                href="#" 
-                className="text-white me-3"
+                href="https://twitter.com/shopnest" 
+                className="text-white"
                 target="_blank" 
                 rel="noopener noreferrer"
               >
-                <FaTwitter className="me-1" /> Twitter
+                <FaTwitter className="me-2" /> Twitter
               </a>
             </div>
           </div>
@@ -59,7 +59,7 @@ const Footer = () => {
         {/* حقوق النشر */}
         <div className="text-center pt-3 border-top border-secondary">
           <p className="mb-0">
-            &copy; {new Date().getFullYear()} ShopNesta. جميع الحقوق محفوظة.
+            &copy; {new Date().getFullYear()} ShopNest. جميع الحقوق محفوظة.
           </p>
         </div>
       </div>
