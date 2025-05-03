@@ -16,6 +16,7 @@ const Products = () => {
   const [data, setData] = useState([]);
   const [filter, setFilter] = useState(data);
   const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
 
   const dispatch = useDispatch();
 
@@ -27,13 +28,16 @@ const Products = () => {
     const getProducts = async () => {
       setLoading(true);
       try {
-        const querySnapshot = await getDocs(collection(db, "products"));
-        const productsArray = querySnapshot.docs.map(doc => ({
-          id: doc.id,
-          ...doc.data()
-        }));
-        setData(productsArray);
-        setFilter(productsArray);
+        const querySnapshot = await getDocs(collection(db, "categories"));
+        const productsArray = querySnapshot.docs.flatMap(doc => {
+          const data = doc.data();
+          return data.products ? data.products : [];
+        });
+
+        const sortedProducts = productsArray.sort((a, b) => b.id - a.id);
+
+        setData(sortedProducts);
+        setFilter(sortedProducts);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -42,6 +46,20 @@ const Products = () => {
     };
 
     getProducts();
+  }, []);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      try {
+        const querySnapshot = await getDocs(collection(db, "categories"));
+        const categoryNames = querySnapshot.docs.map(doc => doc.id);
+        setCategories(categoryNames);
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
+    };
+
+    getCategories();
   }, []);
 
   const Loading = () => {
@@ -82,35 +100,21 @@ const Products = () => {
       <>
         <div className="buttons text-center py-5">
           <button
-            className="btn btn-outline-dark btn-sm m-2"
-            onClick={() => setFilter(data)}
+              className="btn btn-outline-dark btn-sm m-2"
+              onClick={() => setFilter(data)}
           >
             All
           </button>
-          <button
-            className="btn btn-outline-dark btn-sm m-2"
-            onClick={() => filterProduct("men's clothing")}
-          >
-            Men's Clothing
-          </button>
-          <button
-            className="btn btn-outline-dark btn-sm m-2"
-            onClick={() => filterProduct("women's clothing")}
-          >
-            Women's Clothing
-          </button>
-          <button
-            className="btn btn-outline-dark btn-sm m-2"
-            onClick={() => filterProduct("jewelery")}
-          >
-            Jewelery
-          </button>
-          <button
-            className="btn btn-outline-dark btn-sm m-2"
-            onClick={() => filterProduct("electronics")}
-          >
-            Electronics
-          </button>
+
+          {categories.map((category) => (
+              <button
+                  key={category}
+                  className="btn btn-outline-dark btn-sm m-2"
+                  onClick={() => filterProduct(category)}
+              >
+                {category.charAt(0).toUpperCase() + category.slice(1)}
+              </button>
+          ))}
         </div>
 
         {filter.map((product) => {

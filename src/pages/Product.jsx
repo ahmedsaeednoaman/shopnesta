@@ -4,7 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import Marquee from "react-fast-marquee";
 import { useDispatch } from "react-redux";
 import { addCart } from "../redux/action";
-import { doc, getDoc } from "firebase/firestore";
+import { getDocs, collection } from "firebase/firestore";
 
 import { Footer, Navbar } from "../components";
 import { db } from "../firebase/firebaseConfig";
@@ -26,27 +26,31 @@ const Product = () => {
       setLoading(true);
       setLoading2(true);
       try {
-        const docRef = doc(db, "products", id);
-        const docSnap = await getDoc(docRef);
+        const querySnapshot = await getDocs(collection(db, "categories"));
 
-        if (docSnap.exists()) {
-          const productData = { id: docSnap.id, ...docSnap.data() };
-          setProduct(productData);
+        let foundProduct = null;
+        let similarProducts = [];
 
-          const categoryDocRef = doc(db, "categories", productData.category);
-          const categoryDocSnap = await getDoc(categoryDocRef);
+        querySnapshot.forEach(docSnap => {
+          const categoryData = docSnap.data();
+          const products = categoryData.products || [];
 
-          if (categoryDocSnap.exists()) {
-            const categoryData = categoryDocSnap.data();
-            setSimilarProducts((categoryData.products || []).filter(p => p.id !== productData.id));
-          } else {
-            setSimilarProducts([]);
+          const productMatch = products.find(p => String(p.id) === String(id));
+          if (productMatch) {
+            foundProduct = productMatch;
+            similarProducts = products.filter(p => p.id !== productMatch.id);
           }
+        });
+
+        if (foundProduct) {
+          setProduct(foundProduct);
+          setSimilarProducts(similarProducts);
         } else {
-          console.log("No such product document!");
+          console.log("Product not found");
         }
+
       } catch (error) {
-        console.error("Error fetching product or category:", error);
+        console.error("Error fetching product or categories:", error);
       } finally {
         setLoading(false);
         setLoading2(false);
@@ -55,6 +59,7 @@ const Product = () => {
 
     getProduct();
   }, [id]);
+
 
   const Loading = () => (
     <div className="container my-5 py-2">
